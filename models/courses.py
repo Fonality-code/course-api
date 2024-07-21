@@ -14,6 +14,7 @@ class Course(Document):
     title: str 
     description: str 
     category: str 
+    thumbnail: str
     type: Annotated[str, Indexed]
     instructor_id: Annotated[str, Indexed]
     price: float
@@ -32,6 +33,7 @@ class CreateCourse(BaseModel):
     type: CourseType
     instructor_id: str 
     price: float
+    thumbnail: str
     
     
     model_config = ConfigDict(
@@ -44,7 +46,8 @@ class CreateCourse(BaseModel):
                 "category": "Programming",
                 "type": "pre-recorded",
                 "instructor_id": "12345",
-                "price": 299.99
+                "price": 299.99,
+                "thumbnail": "https://www.example.com/image.png"
             }
         }
     )
