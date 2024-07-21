@@ -15,8 +15,8 @@ class Course(Document):
     description: str 
     category: str 
     thumbnail: str
-    type: Annotated[str, Indexed]
-    instructor_id: Annotated[str, Indexed]
+    type: Annotated[str, Indexed()]
+    instructor_id: Annotated[str, Indexed()]
     price: float
     created_at: str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     updated_at: str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")

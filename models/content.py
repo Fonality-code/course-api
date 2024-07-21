@@ -13,7 +13,7 @@ class ContentType(Enum):
 
 
 class Content(Document):
-    course_id: Annotated[str, Indexed]
+    course_id: Annotated[str, Indexed()]
     type: str
     description: str
     path: str

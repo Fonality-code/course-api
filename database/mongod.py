@@ -9,11 +9,12 @@ from beanie import init_beanie
 # models 
 from models.courses import Course
 from models.content import Content
-
+from models.enrollment import Enrollment
 
 documents = [
     Content,
-    Course
+    Course,
+    Enrollment
 ]
 
 
