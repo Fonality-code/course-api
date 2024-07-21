@@ -11,12 +11,14 @@ from models.courses import Course
 from models.content import Content
 from models.enrollment import Enrollment
 from models.payment import Payment
+from models.review import Review
 
 documents = [
     Content,
     Course,
     Enrollment,
-    Payment
+    Payment,
+    Review
 ]
 
 
