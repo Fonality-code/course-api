@@ -3,7 +3,15 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi_versioning import VersionedFastAPI
 from fastapi import FastAPI
 
+from models.errors import ErrorResponse
+
+
 from database.mongod import init_db
+
+
+
+
+from routes.v1 import course
 
 
 app = FastAPI(
@@ -11,6 +19,13 @@ app = FastAPI(
     version=Settings().APP_VERSION,
     description=Settings().APP_DESCRIPTION,
 )
+
+
+
+
+# add routers
+app.include_router(course.router)
+
 
 
 app = VersionedFastAPI(app, enable_latest=True, version_format='{major}',
@@ -28,6 +43,15 @@ app.add_middleware(
     allow_credentials=True
 )
 
+@app.exception_handler(Exception)
+async def validation_exception_handler(request, exc: Exception):
+    return ErrorResponse(
+        status_code=500,
+        message="Internal Server Error",
+        errors=str(exc)
+    )
+
+
 
 
 async def startup():
@@ -37,18 +61,13 @@ async def startup():
 
 app.add_event_handler("startup", startup)
 
-@app.get('/')
-def index():
-    return {
-        "API": {
-            "version": Settings().APP_VERSION,
-            "description": Settings().APP_DESCRIPTION
-        }
-    }
-
-
 @app.get("/healthcheck")
 def api_healthcheck():
     return "OK 200 - app running successfully"
 
 
+
+
+
+# # register routers
+# app.include_router(course.router)

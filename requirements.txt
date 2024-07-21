@@ -8,3 +8,5 @@ uvicorn
 starlette
 fastapi-versioning
 beanie
+pytest
+httpx

@@ -10,3 +10,4 @@ class Settings(BaseSettings):
     APP_VERSION: str
     APP_DESCRIPTION: str = ""
     MONGODB_URL: str
+    DATABASE_NAME: str

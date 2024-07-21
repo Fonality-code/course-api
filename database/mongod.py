@@ -1,17 +1,34 @@
-import motor.motor_asyncio
+
+from motor.motor_asyncio import AsyncIOMotorClient
+from pymongo.server_api import ServerApi
+from pymongo import MongoClient
 from config.config import Settings
 from beanie import init_beanie
 
 
+# models 
+from models.courses import (
+    Course
+)
 
 
-documents = [
 
-]
+
 
 
 
 async def init_db():
-    client = motor.motor_asyncio.AsyncIOMotorClient(Settings().MONGODB_URL)
-    await init_beanie(database=client.course_management_api, document_models=documents)
+    # Create a new client and connect to the server
+    client = AsyncIOMotorClient(Settings().MONGODB_URL, server_api=ServerApi('1'))
+    # Send a ping to confirm a successful connection
+    database = client[Settings().DATABASE_NAME]
+    try:
+        await init_beanie(database=database, document_models=[
+            Course
+        ])
+        client.admin.command('ping')
+        print("You successfully connected to Database!")
+    except Exception as e:
+        print(e)
+        print("Database Not Connected!")
 
