@@ -9,7 +9,7 @@ from models.errors import ErrorResponse
 from database.mongod import init_db
 
 
-from routes.v1 import content, course, enrollment
+from routes.v1 import content, course, enrollment, payment
 
 
 app = FastAPI(
@@ -23,7 +23,7 @@ app = FastAPI(
 app.include_router(course.router)
 app.include_router(content.router)
 app.include_router(enrollment.router)
-
+app.include_router(payment.router)
 
 app = VersionedFastAPI(
     app, enable_latest=True, version_format="{major}", prefix_format="/v{major}"
