@@ -1,0 +1,10 @@
+fastapi
+pydantic
+pydantic-settings
+pydantic_core
+pymongo
+python-dotenv
+uvicorn
+starlette
+fastapi-versioning
+beanie
