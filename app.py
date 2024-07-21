@@ -9,12 +9,7 @@ from models.errors import ErrorResponse
 from database.mongod import init_db
 
 
-
-
-from routes.v1 import (
-    content,
-    course
-)
+from routes.v1 import content, course, enrollment
 
 
 app = FastAPI(
@@ -24,19 +19,15 @@ app = FastAPI(
 )
 
 
-
-
 # add routers
 app.include_router(course.router)
 app.include_router(content.router)
+app.include_router(enrollment.router)
 
 
-
-app = VersionedFastAPI(app, enable_latest=True, version_format='{major}',
-    prefix_format='/v{major}')
-
-
-
+app = VersionedFastAPI(
+    app, enable_latest=True, version_format="{major}", prefix_format="/v{major}"
+)
 
 
 app.add_middleware(
@@ -44,18 +35,15 @@ app.add_middleware(
     allow_origins=["*"],
     allow_methods=["*"],
     allow_headers=["*"],
-    allow_credentials=True
+    allow_credentials=True,
 )
+
 
 @app.exception_handler(Exception)
 async def validation_exception_handler(request, exc: Exception):
     return ErrorResponse(
-        status_code=500,
-        message="Internal Server Error",
-        errors=str(exc)
+        status_code=500, message="Internal Server Error", errors=str(exc)
     )
-
-
 
 
 async def startup():
@@ -65,12 +53,10 @@ async def startup():
 
 app.add_event_handler("startup", startup)
 
+
 @app.get("/healthcheck")
 def api_healthcheck():
     return "OK 200 - app running successfully"
-
-
-
 
 
 # # register routers
