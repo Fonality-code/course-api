@@ -12,6 +12,9 @@ from models.courses import (
     UpdateCourse
 )
 
+
+from models.content import Content
+
 from models.errors import (
     ErrorResponse, 
     HTTPError
@@ -82,6 +85,18 @@ async def delete_course(id: PydanticObjectId):
     if not course:
         raise HTTPException(status_code=404, detail="Course not found")
     
+    # delete all contents associated with the course
+    contents = await Content.find({'course_id': str(course.id)}).to_list()
+    for content in contents:
+        await content.delete()
+
+    contents = await Content.find({'course_id': str(course.id)}).to_list()
+
+    if len(contents) > 0:
+        raise HTTPException(status_code=500, detail="Failed to delete course contents")
+    
     await course.delete()
-    return course
+    return {
+        "message": "Course deleted successfully"
+    }
     

@@ -11,7 +11,10 @@ from database.mongod import init_db
 
 
 
-from routes.v1 import course
+from routes.v1 import (
+    content,
+    course
+)
 
 
 app = FastAPI(
@@ -25,6 +28,7 @@ app = FastAPI(
 
 # add routers
 app.include_router(course.router)
+app.include_router(content.router)
 
 
 

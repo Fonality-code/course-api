@@ -1,8 +1,8 @@
 from datetime import datetime
-from beanie import Document
+from beanie import Document, Indexed
 from pydantic import BaseModel, ConfigDict
 from enum import Enum
-from typing import Optional
+from typing import Annotated, Optional
 
 class CourseType(str, Enum):
     PRE_RECORDED = "pre-recorded"
@@ -14,8 +14,8 @@ class Course(Document):
     title: str 
     description: str 
     category: str 
-    type: str
-    instructor_id: str 
+    type: Annotated[str, Indexed]
+    instructor_id: Annotated[str, Indexed]
     price: float
     created_at: str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     updated_at: str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")

@@ -7,12 +7,14 @@ from beanie import init_beanie
 
 
 # models 
-from models.courses import (
+from models.courses import Course
+from models.content import Content
+
+
+documents = [
+    Content,
     Course
-)
-
-
-
+]
 
 
 
@@ -23,9 +25,7 @@ async def init_db():
     # Send a ping to confirm a successful connection
     database = client[Settings().DATABASE_NAME]
     try:
-        await init_beanie(database=database, document_models=[
-            Course
-        ])
+        await init_beanie(database=database, document_models=documents)
         client.admin.command('ping')
         print("You successfully connected to Database!")
     except Exception as e:
