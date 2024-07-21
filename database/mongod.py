@@ -13,4 +13,5 @@ documents = [
 
 async def init_db():
     client = motor.motor_asyncio.AsyncIOMotorClient(Settings().MONGODB_URL)
-    await init_beanie(database=client.db_name, document_models=documents)
+    await init_beanie(database=client.course_management_api, document_models=documents)
+
