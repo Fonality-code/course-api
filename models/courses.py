@@ -49,7 +49,7 @@ class CreateCourse(BaseModel):
     
     
     model_config = ConfigDict(
-        extra='ignore', prerequisite
+        extra='ignore', 
         arbitrary_types_allowed=True,
         json_schema_extra={
             "example": {
@@ -61,7 +61,7 @@ class CreateCourse(BaseModel):
                 "price": 299.99,
                 "thumbnail": "https://www.example.com/image.png",
                 "level": "advanced",
-                "prerequisite": "Intermediate Python Programming"
+                "prerequisite": "Advance Python Programming"
             }
         }
     )
