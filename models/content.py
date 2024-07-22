@@ -13,6 +13,7 @@ class ContentType(Enum):
 
 
 class Content(Document):
+    title: str
     course_id: Annotated[str, Indexed()]
     type: str
     description: str
@@ -22,6 +23,7 @@ class Content(Document):
 
 
 class CreateContent(BaseModel):
+    title: str
     course_id: str
     type: ContentType
     description: str

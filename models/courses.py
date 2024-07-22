@@ -2,11 +2,17 @@ from datetime import datetime
 from beanie import Document, Indexed
 from pydantic import BaseModel, ConfigDict
 from enum import Enum
-from typing import Annotated, Optional
+from typing import Annotated, List, Optional
 
 class CourseType(str, Enum):
     PRE_RECORDED = "pre-recorded"
     LIVE_BOOT = "life-boot"
+
+
+class Level(str, Enum):
+    BEGINNER = "beginner"
+    INTERMEDIATE = "intermediate"
+    ADVANCED = "advanced"
     
 
 
@@ -15,6 +21,9 @@ class Course(Document):
     description: str 
     category: str 
     thumbnail: str
+    level: str
+    skills: Optional[List[str]] = []
+    prerequisite: str
     type: Annotated[str, Indexed()]
     instructor_id: Annotated[str, Indexed()]
     price: float
@@ -34,10 +43,13 @@ class CreateCourse(BaseModel):
     instructor_id: str 
     price: float
     thumbnail: str
+    level: Level
+    prerequisite: str
+    skills: Optional[List[str]] = None
     
     
     model_config = ConfigDict(
-        extra='ignore', 
+        extra='ignore', prerequisite
         arbitrary_types_allowed=True,
         json_schema_extra={
             "example": {
@@ -47,7 +59,9 @@ class CreateCourse(BaseModel):
                 "type": "pre-recorded",
                 "instructor_id": "12345",
                 "price": 299.99,
-                "thumbnail": "https://www.example.com/image.png"
+                "thumbnail": "https://www.example.com/image.png",
+                "level": "advanced",
+                "prerequisite": "Intermediate Python Programming"
             }
         }
     )
@@ -60,3 +74,5 @@ class UpdateCourse(BaseModel):
     type: Optional[CourseType] = None
     instructor_id: Optional[str] = None
     price: Optional[float] = None
+    thumbnail: Optional[str] = None
+    level: Optional[Level] = None
