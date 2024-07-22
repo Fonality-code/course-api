@@ -34,6 +34,7 @@ class CreateContent(BaseModel):
         arbitrary_types_allowed=True,
         json_schema_extra={
             "example": {
+                "title": "Importance of Programming Protocol",
                 "course_id": "5eb7cf5a86d9755df3a6c593",
                 "type": "youtube",
                 "description": "video lecture on the importance of programming protocol",
@@ -44,6 +45,7 @@ class CreateContent(BaseModel):
 
 
 class UpdateContent(BaseModel):
+    title: Optional[str] = None
     type: Optional[ContentType] = None
     description: Optional[str]  = None
     path: Optional[str] = None
